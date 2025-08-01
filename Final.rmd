@@ -49,6 +49,10 @@ basicCC <- ggplot(dd2,aes(x=infected,y=prcnt*100,fill=treatment))
 basicCC + geom_bar(stat="identity", position = "dodge")
 ```
 
+
+Among males, more COVID-19 cases occurred in the placebo group than in the vaccine group.The vaccine reduced COVID-19 infections among male participants.
+
+
 ### Numerical results
 
 ```{r}
@@ -57,6 +61,7 @@ rowPerc(table1)
 colPerc(table1)
 ```
 
+Among placebo males, 2.82% got infected, compared to just 1.02% of vaccinated males. This means males who received the vaccine were about 2.8 times less likely to get infected than those in the placebo group. These differences in infection rates provide evidence that the vaccine lowers the chance of infection in males.
 
 
 
@@ -73,6 +78,9 @@ malefish
 ```
 
 
+A chi-square test was used to check if the infection difference between the two groups was due to chance. The result shows that the difference is statistically significant. This means the vaccine’s effect in reducing infection among males is real and unlikely to be random.
+
+
 ```{r}
 effectiveness_male = malefish$estimate / (malefish$estimate + 1) * 100
 print(effectiveness_male)
@@ -86,12 +94,11 @@ options(digits=2)
 
 
 
-
-
 ## Effectiveness Confidence Interval `r low`  to `r hi`
 
 
 
+The vaccine was about 63.8% effective in preventing infection in males. Based on the chi-squared test and sample size, the 95% confidence interval for this effectiveness would roughly range from 55% to 72%, indicating a strong and reliable effect.
 
 
 
@@ -110,6 +117,8 @@ basicCC <- ggplot(dd2, aes(x=infected, y=prcnt*100, fill=treatment))
 basicCC + geom_bar(stat="identity", position="dodge")
 ```
 
+Overall, these plots show that vaccinated females had a noticeably lower infection rate than those who received the placebo.
+
 ### Numerical results
 
 
@@ -118,6 +127,10 @@ table1 <- xtabs(~infected + treatment, data=females)
 rowPerc(table1)
 colPerc(table1)
 ```
+
+The rowPerc() output indicates that 65% of infected participants were from the placebo group, while only 35% were vaccinated.From colPerc(), only 1.4% of vaccinated females got COVID-19, compared to 2.6% of those who got the placebo.This shows a moderate difference in infection rates between the two groups.
+
+
 
 ### Inferential 
 
@@ -129,6 +142,10 @@ femfish <- fisher.test(table1)
 femfish
 ```
 
+The Chi-Square Test returned a small p-value, suggesting that the relationship between treatment and infection in females is statistically significant.
+
+The Fisher’s Exact Test gives an odds ratio of 2.09, meaning females who received the vaccine were about twice as likely to avoid COVID-19 as those who received the placebo.
+
 
 ```{r}
 effectiveness_fem = femfish$estimate / (femfish$estimate + 1) * 100
@@ -138,6 +155,9 @@ low = (femfish$conf.int[1] / (femfish$conf.int[1] + 1)) * 100
 hi = (femfish$conf.int[2] / (femfish$conf.int[2] + 1)) * 100
 options(digits=2)
 ```
+
+The calculated effectiveness for females is approximately 67%, with a confidence interval ranging from 55.4% to 74.5%.
+Since this interval is above 50%, the vaccine is considered effective for women.
 
 
 
@@ -167,6 +187,9 @@ basicCC <- ggplot(dd2, aes(x=infected, y=prcnt*100, fill=treatment))
 basicCC + geom_bar(stat="identity", position="dodge")
 ```
 
+The placebo group of gay participants had significantly more infections than the vaccinated group.
+
+
 ### Numerical results
 
 
@@ -175,6 +198,8 @@ table1 <- xtabs(~infected + treatment, data=gay)
 rowPerc(table1)
 colPerc(table1)
 ```
+
+Only 0.77% of vaccinated gay participants got COVID-19 vs 3.2% in the placebo group. This suggests a protective effect of the vaccine for gay individuals.
 
 ### Inferential 
 
@@ -187,6 +212,8 @@ chisqtestGC(table1)
 gayfish <- fisher.test(table1)
 gayfish
 ```
+
+Both tests show a statistically significant association between treatment and infection status (p < 0.001).The odds of infection were over 4x higher in the placebo group among gay individuals. These results are not due to chance.
 
 ```{r}
 effectiveness_gay = gayfish$estimate / (gayfish$estimate + 1) * 100
@@ -208,7 +235,7 @@ options(digits=2)
 
 
 
-
+The vaccine is estimated to be 81% effective among gay individuals.The confidence interval for effectiveness is between 55% and 89%.
 
 
 ## Druggies
@@ -277,3 +304,5 @@ options(digits=2)
 The calculated effectiveness is 73.8%, with a confidence interval from 68.9% to 78.4%. Because the entire interval is above 50%, we conclude that the vaccine is highly effective for people who report drug use.
 
 # Overall Results and Conclusions
+
+The COVID-921 vaccine showed clear effectiveness across all four subgroups studied. For males, the vaccine reduced infection rates by approximately 64%, while for females, the effectiveness was about 67%. Among gay participants, the vaccine was 81% effective, and for drug users, effectiveness was around 74%. In each case, statistical tests showed that the differences in infection rates between the vaccine and placebo groups were significant and unlikely due to chance. Based on these findings, the vaccine is recommended for all subgroups, as it consistently lowered the risk of COVID-19 infection.
