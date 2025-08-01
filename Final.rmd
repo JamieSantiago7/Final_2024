@@ -46,6 +46,27 @@ basicC + geom_bar(stat="identity",position="dodge")
 basicCC <- ggplot(dd2,aes(x=infected,y=prcnt*100,fill=treatment)) 
 basicCC + geom_bar(stat="identity", position = "dodge")
 ```
+```{r}
+table1 <- xtabs(~infected + treatment, data=males)
+rowPerc(table1)
+colPerc(table1)
+```
+
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+malefish <- fisher.test(table1)
+malefish
+```
+
+```{r}
+effectiveness_male = malefish$estimate / (malefish$estimate + 1) * 100
+print(effectiveness_male)
+
+low = (malefish$conf.int[1] / (malefish$conf.int[1] + 1)) * 100
+hi = (malefish$conf.int[2] / (malefish$conf.int[2] + 1)) * 100
+options(digits=2)
+```
 
 
 ## Females
