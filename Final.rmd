@@ -105,6 +105,37 @@ options(digits=2)
 
 ## LGBTQ
 
+```{r}
+dd2 <- gay %>% group_by(infected, treatment) %>% summarize(count=n()) %>% mutate(prcnt = count/sum(count))
+
+basicC <- ggplot(dd2, aes(x=infected, y=count, fill=treatment))
+basicC + geom_bar(stat="identity", position="dodge")
+
+basicCC <- ggplot(dd2, aes(x=infected, y=prcnt*100, fill=treatment))
+basicCC + geom_bar(stat="identity", position="dodge")
+```
+
+```{r}
+table1 <- xtabs(~infected + treatment, data=gay)
+rowPerc(table1)
+colPerc(table1)
+```
+
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+gayfish <- fisher.test(table1)
+gayfish
+```
+
+```{r}
+effectiveness_gay = gayfish$estimate / (gayfish$estimate + 1) * 100
+print(effectiveness_gay)
+
+low = (gayfish$conf.int[1] / (gayfish$conf.int[1] + 1)) * 100
+hi = (gayfish$conf.int[2] / (gayfish$conf.int[2] + 1)) * 100
+options(digits=2)
+```
 
 
 ## Druggies
